@@ -33,7 +33,7 @@ The reason SNI exists is practical. A single server can host multiple websites. 
 
 Here is what a TLS ClientHello looks like:
 
-![TLS ClientHello structure showing the SNI field in plaintext](../diagrams/blog_tls_clienthello.png)
+![TLS ClientHello structure showing the SNI field in plaintext](diagrams/blog_tls_clienthello.png)
 
 The red section is the SNI extension. It sits right there in the open. Anyone watching the network, including your mobile carrier, can read it.
 
@@ -43,7 +43,7 @@ After the handshake completes, everything becomes encrypted. The carrier can no 
 
 When a student opens Microsoft Teams on their phone, the following happens:
 
-![Normal zero-rating flow](../diagrams/blog_zero_rating_normal.png)
+![Normal zero-rating flow](diagrams/blog_zero_rating_normal.png)
 
 1. The phone sends a TLS ClientHello with SNI set to `teams.microsoft.com`
 2. The carrier's DPI engine sees the SNI and checks it against a whitelist of educational platforms
@@ -66,11 +66,11 @@ To pull this off, you need three things:
 
 The carrier sees a TLS connection with SNI `teams.microsoft.com` and thinks you are in a video call. It charges the traffic from the free 20GB bucket. In reality, you are browsing YouTube, scrolling Instagram, or downloading files. The carrier has no way to tell the difference because everything after the ClientHello is encrypted. Your paid data plan stays untouched.
 
-![SNI spoofing attack flow](../diagrams/blog_sni_attack.png)
+![SNI spoofing attack flow](diagrams/blog_sni_attack.png)
 
 The overall architecture looks like this:
 
-![Architecture overview](../diagrams/blog_architecture.png)
+![Architecture overview](diagrams/blog_architecture.png)
 
 ## What You Need
 
@@ -89,7 +89,9 @@ The toolkit needs Python 3.12+, the Azure CLI, and a few other tools. There is a
 **macOS / Linux:**
 
 ```bash
-git clone <repository-url>
+# if you don't have git oh god
+# click download zip on github
+git clone https://github.com/hashseclb/hash-teams-tunnel-toolkit.git
 cd teams-tunnel-pentest
 ./install.sh
 ```
@@ -97,7 +99,9 @@ cd teams-tunnel-pentest
 **Windows (PowerShell, run as Administrator):**
 
 ```powershell
-git clone <repository-url>
+# if you don't have git oh god
+# click download zip on github
+git clone https://github.com/hashseclb/hash-teams-tunnel-toolkit.git
 cd teams-tunnel-pentest
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\install.ps1
@@ -400,3 +404,7 @@ The fix is not complicated either. Correlating SNI with destination IP ranges el
 1- Does the WhatsApp bundle only cover WhatsApp?
 
 2- What is Encrypted Client Hello (ECH)?
+
+---
+
+If you found this useful, give us a star on [GitHub](https://github.com/hashseclb/hash-teams-tunnel-toolkit) and follow [@hashseclb](https://github.com/hashseclb) for more security research.
